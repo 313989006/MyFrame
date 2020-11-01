@@ -12,9 +12,9 @@ public interface ShopCategoryService {
 
     Result<Boolean> update(ShopCategory shopCategory);
 
-    Result<Boolean> delete(ShopCategory shopCategory);
+    Result<Boolean> delete(Integer shopCategoryId);
 
-    Result<ShopCategory> queryById(String shopCategoryId);
+    Result<ShopCategory> queryById(Integer shopCategoryId);
 
     Result<List<ShopCategory>> queryByPage(ShopCategory shopCategory, int pageNum, int pageSize);
 }

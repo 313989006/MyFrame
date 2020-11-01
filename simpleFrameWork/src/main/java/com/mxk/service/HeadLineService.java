@@ -11,9 +11,9 @@ public interface HeadLineService {
 
     Result<Boolean> update(HeadLine headLine);
 
-    Result<Boolean> delete(HeadLine headLine);
+    Result<Boolean> delete(Integer headLineId);
 
-    Result<HeadLine> queryById(String headLineId);
+    Result<HeadLine> queryById(Integer headLineId);
 
     Result<List<HeadLine>> queryByPage(HeadLine headLine,int pageNum,int pageSize);
 

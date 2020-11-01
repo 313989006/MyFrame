@@ -25,12 +25,12 @@ public class ShopCategoryServiceImpl implements ShopCategoryService {
     }
 
     @Override
-    public Result<Boolean> delete(ShopCategory shopCategory) {
+    public Result<Boolean> delete(Integer shopCategoryId) {
         return null;
     }
 
     @Override
-    public Result<ShopCategory> queryById(String shopCategoryId) {
+    public Result<ShopCategory> queryById(Integer shopCategoryId) {
         return null;
     }
 

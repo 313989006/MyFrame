@@ -25,12 +25,12 @@ public class HeadLineServiceImpl implements HeadLineService {
     }
 
     @Override
-    public Result<Boolean> delete(HeadLine headLine) {
+    public Result<Boolean> delete(Integer headLineId) {
         return null;
     }
 
     @Override
-    public Result<HeadLine> queryById(String headLineId) {
+    public Result<HeadLine> queryById(Integer headLineId) {
         return null;
     }
 
