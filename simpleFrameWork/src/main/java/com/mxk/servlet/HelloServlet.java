@@ -26,12 +26,27 @@ public class HelloServlet extends HttpServlet {
     private Logger log = LoggerFactory.getLogger(HelloServlet.class);
 
     @Override
+    public void init(){
+        System.out.println("初始化...");
+    }
+
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("是我调用了doGet方法...");
+        doGet(req,resp);
+    }
+
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         log.debug("我的简易框架开始。。。");
         String name = "我的简易框架。。。";
         request.setAttribute("name",name);
         request.getRequestDispatcher("/WEB-INF/jsp/hello.jsp").forward(request,response);
 
+    }
+
+    @Override
+    public void destroy(){
+        System.out.println("销毁...");
     }
 
 }
