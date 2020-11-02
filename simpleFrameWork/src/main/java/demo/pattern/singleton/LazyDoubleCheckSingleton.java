@@ -60,4 +60,21 @@ public class LazyDoubleCheckSingleton {
         System.out.println(LazyDoubleCheckSingleton.getInstance());
         System.out.println(LazyDoubleCheckSingleton.getInstance());
     }
+
+    /**
+     *   instance= new LazyDoubleCheckSingleton()并不是一个原子操作，其实际上可以抽象为下面几条JVM指令：
+     * memory =allocate();    //1：分配对象的内存空间
+     * ctorInstance(memory);  //2：初始化对象
+     * instance =memory;     //3：设置instance指向刚分配的内存地址
+     * 上面操作2依赖于操作1，但是操作3并不依赖于操作2。所以JVM是可以针对它们进行指令的优化重排序的，经过重排序后如下：
+     *
+     * memory =allocate();    //1：分配对象的内存空间
+     * instance =memory;     //3：instance指向刚分配的内存地址，此时对象还未初始化
+     * ctorInstance(memory);  //2：初始化对象
+     * 指令重排之后，instance指向分配好的内存放在了前面，而这段内存的初始化被排在了后面。
+     * 在线程A执行这段赋值语句，在初始化分配对象之前就已经将其赋值给instance引用，恰好另一个线程进入方法判断instance引用不为null，然后就将其返回使用，导致出错。
+     *
+     * 解决办法:
+     *  用volatile关键字修饰instance变量，使得instance在读、写操作前后都会插入内存屏障，避免重排序。
+     */
 }
