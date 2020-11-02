@@ -1,6 +1,7 @@
 G:\myGitHubProject\MyFrame\simpleFrameWork\src\main\java\org\simpleframework\core\annotation\Controller.java
 G:\myGitHubProject\MyFrame\simpleFrameWork\src\main\java\com\mxk\service\HeadLineShppCategoryService.java
 G:\myGitHubProject\MyFrame\simpleFrameWork\src\main\java\demo\generic\GenericFactory.java
+G:\myGitHubProject\MyFrame\simpleFrameWork\src\main\java\demo\pattern\singleton\StarvingSingleton.java
 G:\myGitHubProject\MyFrame\simpleFrameWork\src\main\java\org\simpleframework\core\annotation\Repository.java
 G:\myGitHubProject\MyFrame\simpleFrameWork\src\main\java\demo\generic\GenericDemo.java
 G:\myGitHubProject\MyFrame\simpleFrameWork\src\main\java\com\mxk\controller\ShopCategoryController.java
@@ -11,6 +12,7 @@ G:\myGitHubProject\MyFrame\simpleFrameWork\src\main\java\com\mxk\service\ShopCat
 G:\myGitHubProject\MyFrame\simpleFrameWork\src\main\java\demo\generic\RobotFactory.java
 G:\myGitHubProject\MyFrame\simpleFrameWork\src\main\java\com\mxk\entity\HeadLine.java
 G:\myGitHubProject\MyFrame\simpleFrameWork\src\main\java\com\mxk\servlet\HelloServlet.java
+G:\myGitHubProject\MyFrame\simpleFrameWork\src\main\java\demo\pattern\singleton\LazyDoubleCheckSingleton.java
 G:\myGitHubProject\MyFrame\simpleFrameWork\src\main\java\com\mxk\service\impl\ShopCategoryServiceImpl.java
 G:\myGitHubProject\MyFrame\simpleFrameWork\src\main\java\com\mxk\controller\MainPageController.java
 G:\myGitHubProject\MyFrame\simpleFrameWork\src\main\java\demo\generic\GenericFactoryImpl.java

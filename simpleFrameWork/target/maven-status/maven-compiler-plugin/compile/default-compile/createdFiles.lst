@@ -19,6 +19,7 @@ com\mxk\servlet\DispatcherServlet.class
 com\mxk\service\impl\HeadLineServiceImpl.class
 org\simpleframework\core\annotation\Controller.class
 demo\generic\GenericFactoryImpl.class
+demo\pattern\singleton\LazyDoubleCheckSingleton.class
 com\mxk\entity\dto\MainPageInfoDto.class
 org\simpleframework\core\annotation\Service.class
 com\mxk\servlet\HelloServlet.class
