@@ -12,6 +12,13 @@ import org.junit.jupiter.api.Test;
  **/
 public class BeanContainerTest {
 
+    /**
+    *  @BeforeAll @AfterAll 注解的意义
+     * @ @BeforeAll注释的实例方法会在实例所有的测试用例之前调用，
+     * @ @AfterAll注释的实例方法会在所有实例的测试用例之后调用。
+     * 但如果@BeforeAll或@AfterAll要应用在实例方法上，需要在实例的类上添加注释@TestInstance。
+    */
+
     private static BeanContainer beanContainer;
     /** 
     * @Description: 初始化 bean实例 ，@BeforeAll ：保证框架在执行test之前，执行init，初始化beanContainer实例
