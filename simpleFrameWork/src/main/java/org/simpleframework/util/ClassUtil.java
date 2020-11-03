@@ -1,10 +1,10 @@
 package org.simpleframework.util;
 
-import javafx.scene.effect.SepiaTone;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.lang.reflect.Constructor;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
@@ -136,6 +136,24 @@ public class ClassUtil {
     */
     public static ClassLoader getClassLoader(){
         return Thread.currentThread().getContextClassLoader();
+    }
+
+    /**
+    * @Description: 实例化 class
+    * @Param: clazz Class
+    * @Param: <T> Class 的类型
+    * @Param: accessible 是否支持创建出私有 class 对象的实例
+     * @return 类的实例化
+    */
+    public static <T> T newInstance(Class<?> clazz,boolean accessible){
+        try {
+            Constructor constructor = clazz.getDeclaredConstructor();
+            constructor.setAccessible(accessible);
+            return (T)constructor.newInstance();
+        } catch (Exception e) {
+            log.error("newInstance 报错：{}",e);
+            throw new RuntimeException(e);
+        }
     }
 
     public static void main(String[] args) {
