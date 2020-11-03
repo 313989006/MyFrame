@@ -221,7 +221,7 @@ public class BeanContainer {
         Set<Class<?>> classSet = new HashSet<>();
         for ( Class<?> clazz : keySet) {
             // 判断类是否被相关的注解标记
-            if (interfaceOrClass.isAssignableFrom(clazz)){
+            if (interfaceOrClass.isAssignableFrom(clazz) && !clazz.equals(interfaceOrClass)){
                 classSet.add(clazz);
             }
         }
