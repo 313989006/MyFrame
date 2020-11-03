@@ -1,9 +1,6 @@
 package org.simpleframework.core;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * @ClassName BeanContainerTest
@@ -11,6 +8,7 @@ import org.junit.jupiter.api.Test;
  * @Author ma.kangkang
  * @Date 2020/11/3 10:15
  **/
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class BeanContainerTest {
 
     /**
@@ -32,6 +30,7 @@ public class BeanContainerTest {
         beanContainer = BeanContainer.instance();
     }
 
+    @Order(1)
     @DisplayName("加载目标类及其实例到BeanContainer ： loadBeansTest")
     @Test
     public void loadBeansTest() throws InstantiationException, IllegalAccessException {
