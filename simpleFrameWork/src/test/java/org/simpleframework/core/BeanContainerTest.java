@@ -2,6 +2,7 @@ package org.simpleframework.core;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -31,6 +32,7 @@ public class BeanContainerTest {
         beanContainer = BeanContainer.instance();
     }
 
+    @DisplayName("加载目标类及其实例到BeanContainer ： loadBeansTest")
     @Test
     public void loadBeansTest() throws InstantiationException, IllegalAccessException {
         Assertions.assertEquals(false,beanContainer.isLoaded());
@@ -38,6 +40,5 @@ public class BeanContainerTest {
         Assertions.assertEquals(6,beanContainer.size());
         Assertions.assertEquals(true,beanContainer.isLoaded());
     }
-
 
 }
