@@ -87,7 +87,13 @@ public class BeanContainer {
     /**
     * @Description: 扫描加载所有类
     */
-    public void loadBeans(String packageName) throws IllegalAccessException, InstantiationException {
+    public synchronized void loadBeans(String packageName) throws IllegalAccessException, InstantiationException {
+
+        // 判断bean是否被加载，加载过的话就直接返回，没有被加载过的话，就继续执行加载
+        if (isLoaded()){
+            log.warn("已经被加载过！");
+            return;
+        }
         // 通过 ClassUtil 获取包下所有的类的集合
         Set<Class<?>> classSet = ClassUtil.extractPackageClass(packageName);
 //        if (classSet == null || classSet.isEmpty()){
@@ -107,6 +113,22 @@ public class BeanContainer {
 
             }
         }
+        loaded = true;
+    }
 
+    /**
+    * @Description: 定义私有成员变量判断容器是否加载过bean
+    * @Param:
+    * @return:
+    */
+    private boolean loaded = false;
+
+    /**
+    * @Description: 是否被加载
+    * @Param:
+    * @return:
+    */
+    public boolean isLoaded(){
+        return loaded;
     }
 }
