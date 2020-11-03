@@ -7,6 +7,7 @@ import com.mxk.entity.dto.Result;
 import com.mxk.service.HeadLineService;
 import com.mxk.service.HeadLineShppCategoryService;
 import com.mxk.service.ShopCategoryService;
+import org.simpleframework.core.annotation.Service;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ import java.util.List;
  * @Author ma.kangkang
  * @Date 2020/11/1 12:55
  **/
+@Service
 public class HeadLineShppCategoryServiceImpl implements HeadLineShppCategoryService {
 
     private HeadLineService headLineService;

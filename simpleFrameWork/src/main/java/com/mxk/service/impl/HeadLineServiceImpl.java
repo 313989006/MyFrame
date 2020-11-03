@@ -3,6 +3,7 @@ package com.mxk.service.impl;
 import com.mxk.entity.HeadLine;
 import com.mxk.entity.dto.Result;
 import com.mxk.service.HeadLineService;
+import org.simpleframework.core.annotation.Service;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * @Author ma.kangkang
  * @Date 2020/11/1 12:20
  **/
+@Service
 public class HeadLineServiceImpl implements HeadLineService {
 
     @Override

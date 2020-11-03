@@ -3,6 +3,7 @@ package com.mxk.controller;
 import com.mxk.entity.ShopCategory;
 import com.mxk.entity.dto.Result;
 import com.mxk.service.ShopCategoryService;
+import org.simpleframework.core.annotation.Controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +15,7 @@ import java.util.List;
  * @Author ma.kangkang
  * @Date 2020/11/1 12:22
  **/
+@Controller
 public class ShopCategoryController {
 
     private ShopCategoryService shopCategoryService;

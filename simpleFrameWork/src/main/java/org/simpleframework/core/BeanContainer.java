@@ -70,7 +70,6 @@ public class BeanContainer {
         private ContainerHolder(){
             instance = new BeanContainer();
         }
-
     }
 
     /**
@@ -80,7 +79,7 @@ public class BeanContainer {
     * @Author: ma.kangkang
     * @Date: 2020/11/2
     */
-    public BeanContainer instance(){
+    public static BeanContainer instance(){
         return ContainerHolder.HOLDER.instance;
     }
 
@@ -130,5 +129,13 @@ public class BeanContainer {
     */
     public boolean isLoaded(){
         return loaded;
+    }
+    /**
+    * @Description: 获取bean实例数量
+    * @Param:
+    * @return:
+    */
+    public int size(){
+        return beanMap.size();
     }
 }
