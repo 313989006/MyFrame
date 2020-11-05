@@ -4,6 +4,7 @@ import com.mxk.entity.ShopCategory;
 import com.mxk.entity.dto.Result;
 import com.mxk.service.ShopCategoryService;
 import org.simpleframework.core.annotation.Controller;
+import org.simpleframework.inject.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +19,7 @@ import java.util.List;
 @Controller
 public class ShopCategoryController {
 
+    @Autowired
     private ShopCategoryService shopCategoryService;
 
     public Result<Boolean> insert(HttpServletRequest req, HttpServletResponse resp){

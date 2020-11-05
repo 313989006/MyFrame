@@ -4,6 +4,7 @@ import com.mxk.entity.dto.MainPageInfoDto;
 import com.mxk.entity.dto.Result;
 import com.mxk.service.HeadLineShppCategoryService;
 import org.simpleframework.core.annotation.Controller;
+import org.simpleframework.inject.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class MainPageController {
 
+    @Autowired
     private HeadLineShppCategoryService headLineShppCategoryService;
 
     public Result<MainPageInfoDto> getMainPageInfo(HttpServletRequest req, HttpServletResponse resp){
