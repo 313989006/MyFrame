@@ -8,6 +8,7 @@ import com.mxk.service.HeadLineService;
 import com.mxk.service.HeadLineShppCategoryService;
 import com.mxk.service.ShopCategoryService;
 import org.simpleframework.core.annotation.Service;
+import org.simpleframework.inject.annotation.Autowired;
 
 import java.util.List;
 
@@ -20,8 +21,10 @@ import java.util.List;
 @Service
 public class HeadLineShppCategoryServiceImpl implements HeadLineShppCategoryService {
 
+    @Autowired
     private HeadLineService headLineService;
 
+    @Autowired
     private ShopCategoryService shopCategoryService;
 
     @Override

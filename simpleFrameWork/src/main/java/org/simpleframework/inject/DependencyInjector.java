@@ -1,7 +1,7 @@
-package org.simpleframework.inject.annotation;
+package org.simpleframework.inject;
 
-import javafx.beans.binding.ObjectExpression;
 import org.simpleframework.core.BeanContainer;
+import org.simpleframework.inject.annotation.Autowired;
 import org.simpleframework.util.ClassUtil;
 import org.simpleframework.util.ValidationUtil;
 
