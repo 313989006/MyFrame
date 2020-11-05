@@ -64,7 +64,7 @@ public class DependencyInjector {
                     Object fieldObj = getFieldInstance(fieldClass,autowiredValue);
                     if (fieldObj == null){
                         // 如果获取不到，抛出注入失败的异常
-                        throw new RuntimeException("注入失败！");
+                        throw new RuntimeException("注入失败！"+ fieldClass.getSimpleName());
                     } else {
                         // 6、通过反射将对应的成员变量实例注入到成员变量所在的类的实例里
                         Object targetBean = beanContainer.getBeanByClass(clazz);
@@ -110,7 +110,7 @@ public class DependencyInjector {
                 return classSet.iterator().next();
             } else {
                 // 如果多于两个实现类且用户未指定其中一个实现类，则抛出异常
-                throw new RuntimeException("请确定一个实现类");
+                throw new RuntimeException("请确定一个实现类 : " + autowiredValue + "," + fieldClass.getSimpleName());
             }
         } else {
             for (Class<?> clazz : classSet) {

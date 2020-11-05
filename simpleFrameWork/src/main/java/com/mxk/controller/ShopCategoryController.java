@@ -3,6 +3,7 @@ package com.mxk.controller;
 import com.mxk.entity.ShopCategory;
 import com.mxk.entity.dto.Result;
 import com.mxk.service.ShopCategoryService;
+import lombok.Getter;
 import org.simpleframework.core.annotation.Controller;
 import org.simpleframework.inject.annotation.Autowired;
 
@@ -17,9 +18,10 @@ import java.util.List;
  * @Date 2020/11/1 12:22
  **/
 @Controller
+@Getter
 public class ShopCategoryController {
 
-    @Autowired
+    @Autowired(value = "ShopCategoryServiceImpl")
     private ShopCategoryService shopCategoryService;
 
     public Result<Boolean> insert(HttpServletRequest req, HttpServletResponse resp){

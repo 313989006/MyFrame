@@ -21,10 +21,10 @@ import java.util.List;
 @Service
 public class HeadLineShppCategoryServiceImpl implements HeadLineShppCategoryService {
 
-    @Autowired
+    @Autowired(value = "HeadLineServiceImpl")
     private HeadLineService headLineService;
 
-    @Autowired
+    @Autowired(value = "ShopCategoryServiceImpl")
     private ShopCategoryService shopCategoryService;
 
     @Override

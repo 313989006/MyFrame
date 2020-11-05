@@ -3,6 +3,7 @@ package com.mxk.controller;
 import com.mxk.entity.dto.MainPageInfoDto;
 import com.mxk.entity.dto.Result;
 import com.mxk.service.HeadLineShppCategoryService;
+import lombok.Getter;
 import org.simpleframework.core.annotation.Controller;
 import org.simpleframework.inject.annotation.Autowired;
 
@@ -16,9 +17,10 @@ import javax.servlet.http.HttpServletResponse;
  * @Date 2020/11/1 13:31
  **/
 @Controller
+@Getter
 public class MainPageController {
 
-    @Autowired
+    @Autowired(value = "HeadLineShppCategoryServiceImpl")
     private HeadLineShppCategoryService headLineShppCategoryService;
 
     public Result<MainPageInfoDto> getMainPageInfo(HttpServletRequest req, HttpServletResponse resp){

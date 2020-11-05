@@ -3,6 +3,7 @@ package com.mxk.controller;
 import com.mxk.entity.HeadLine;
 import com.mxk.entity.dto.Result;
 import com.mxk.service.HeadLineService;
+import lombok.Getter;
 import org.simpleframework.core.annotation.Controller;
 import org.simpleframework.inject.annotation.Autowired;
 
@@ -17,9 +18,10 @@ import java.util.List;
  * @Date 2020/11/1 12:22
  **/
 @Controller
+@Getter
 public class HeadLineController {
 
-    @Autowired
+    @Autowired(value = "HeadLineServiceImpl")
     private HeadLineService headLineService;
 
     public Result<Boolean> insert(HttpServletRequest req, HttpServletResponse resp){
