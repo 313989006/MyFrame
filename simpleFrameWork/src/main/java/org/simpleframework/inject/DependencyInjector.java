@@ -9,10 +9,8 @@ import java.lang.reflect.Field;
 import java.util.Set;
 
 /**
- * @ClassName DependencyInjector
- * @Description TODO
- * @Author ma.kangkang
- * @Date 2020/11/4 10:01
+ *  DependencyInjector（DI）
+ *   依赖注入
  **/
 public class DependencyInjector {
 
