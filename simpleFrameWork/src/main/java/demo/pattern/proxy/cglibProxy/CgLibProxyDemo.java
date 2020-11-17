@@ -17,6 +17,7 @@ public class CgLibProxyDemo {
         AliMethodIntercepter methodIntercepter = new AliMethodIntercepter();
         CommonPayment commonPayment = CglibUtil.createCglibProxy(payment,methodIntercepter);
         commonPayment.pay();
+        
 
         System.out.println("*******************");
         ToCPayment toCPayment = new ToCPaymentImpl();
