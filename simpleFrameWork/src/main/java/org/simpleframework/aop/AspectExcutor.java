@@ -33,16 +33,24 @@ public class AspectExcutor implements MethodInterceptor {
         this.sortedAspectInfoList = sortAspectInfoList(aspectInfoList);
     }
 
+    /**
+    * 定义横切逻辑的执行顺序
+    */
     @Override
-    public Object intercept(Object o, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
+    public Object intercept(Object proxy, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
         Object returnValue = null;
         if (ValidationUtil.isEmpty(sortedAspectInfoList)){return returnValue;}
         // 1、按照order 的顺序升序执行完所有Aspect 的 before 方法
         invokeBeforeAdvices(method,args);
         try {
             // 2、执行被代理类的方法
-            returnValue = methodProxy.invokeSuper(o,args);
+            // proxy ：动态代理对象实例
+            // args：被代理方法对应的参数列表
+            returnValue = methodProxy.invokeSuper(proxy,args);
             // 3、如果被代理方法正常返回，则按照 order 的顺序降序执行完所有 Aspect 的 afterReturning 方法
+            // method：被代理的方法实例
+            // args：被代理方法对应的参数列表
+            // returnValue ：返回值
             returnValue = invokeAfterReturningAdvices(method,args,returnValue);
         } catch (Exception e) {
             // 4、如果被代理方法抛出异常，则按照 order 的顺序降序执行完所有 Aspect 的 afterThrowing 方法
@@ -52,7 +60,7 @@ public class AspectExcutor implements MethodInterceptor {
     }
 
 
-    // 1、按照order 的顺序升序执行完所有Aspect 的 before 方法
+    // 1、按照order 的顺序升序执行完所有 Aspect 的 before 方法
     private void invokeBeforeAdvices(Method method, Object[] args) throws Throwable {
         for (AspectInfo aspectInfo : sortedAspectInfoList){
             aspectInfo.getAspectObject().before(targetClass,method,args);

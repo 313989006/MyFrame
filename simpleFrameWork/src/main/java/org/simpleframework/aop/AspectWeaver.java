@@ -19,6 +19,7 @@ import java.util.*;
 public class AspectWeaver {
     private BeanContainer beanContainer;
 
+    // 因为容器是绝对单例的，所以直接用无参构造方法获取容器实例
     public AspectWeaver(){
         this.beanContainer = BeanContainer.instance();
     }
@@ -33,11 +34,12 @@ public class AspectWeaver {
         if (ValidationUtil.isEmpty(aspectSet)){return;}
         // 遍历切面类
         for (Class<?> aspectClass : aspectSet){
-            // 判断 aspectClass 的合法性
+            // 验证 aspectClass 的合法性
             if (verifyAspect(aspectClass)){
                 // 执行 aspectClass 的分类逻辑
                 categorizeAspect(categorizedMap,aspectClass);
             } else {
+                // 当前切面类没有被@Aspect或者@Order标签标记，或者不是继承自DefaultAspect，或者该Aspect的属性是@Aspect标签本身
                 throw new RuntimeException("@Aspect and @Order have not been added to the Aspect class," +
                         "or Aspect class does not extend from DefaultAspect ,or the value in Aspect Tag equals @Aspect");
             }
@@ -68,6 +70,7 @@ public class AspectWeaver {
         Order orderTag = aspectClass.getAnnotation(Order.class);
         // 获取 Aspect 标签实例
         Aspect aspectTag = aspectClass.getAnnotation(Aspect.class);
+        // 获取 aspectClass 获取对应的 Aspect 实例
         DefaultAspect aspect = (DefaultAspect) beanContainer.getBeanByClass(aspectClass);
         AspectInfo aspectInfo = new AspectInfo(orderTag.value(),aspect);
 
@@ -90,8 +93,8 @@ public class AspectWeaver {
         if (ValidationUtil.isEmpty(classSet)){return;}
         // 2、遍历被代理类，分别为每个被代理类生成动态代理实例
         for (Class<?> targetClass : classSet){
-            // 创建动态代理对象
             AspectExcutor aspectExcutor = new AspectExcutor(targetClass,aspectInfos);
+            // 创建动态代理对象
             Object proxyBean = ProxyCreator.createProxy(targetClass, aspectExcutor);
             // 3、将动态代理对象实例添加到容器里，取代未被代理前的类实例
             beanContainer.addBean(targetClass,proxyBean);

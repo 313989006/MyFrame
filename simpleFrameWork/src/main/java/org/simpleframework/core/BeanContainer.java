@@ -99,7 +99,7 @@ public class BeanContainer {
             return;
         }
         for (Class<?> clazz : classSet) {
-            for (Class<? extends Annotation> annotation  :BEAN_ANNOTATION) {
+            for (Class<? extends Annotation> annotation : BEAN_ANNOTATION) {
                 // 如果类上标记了自定义的注解
                 if (clazz.isAnnotationPresent(annotation)){
                     // 将目标类本身作为键，目标类的实例作为值，放入到 beanMap，

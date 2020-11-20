@@ -3,6 +3,7 @@ package com.mxk.service.impl;
 import com.mxk.entity.HeadLine;
 import com.mxk.entity.dto.Result;
 import com.mxk.service.HeadLineService;
+import lombok.extern.slf4j.Slf4j;
 import org.simpleframework.core.annotation.Service;
 
 import java.util.List;
@@ -13,11 +14,13 @@ import java.util.List;
  * @Author ma.kangkang
  * @Date 2020/11/1 12:20
  **/
+@Slf4j
 @Service
 public class HeadLineServiceImpl implements HeadLineService {
 
     @Override
     public Result<Boolean> insert(HeadLine headLine) {
+        log.info("insert() 被执行了！！！");
         return null;
     }
 
