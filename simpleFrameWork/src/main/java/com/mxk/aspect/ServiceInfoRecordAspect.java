@@ -1,10 +1,10 @@
 package com.mxk.aspect;
 
 import lombok.extern.slf4j.Slf4j;
-import org.simpleframework.aop.annotation.Aspect;
+import org.simpleframework.aop.annotation.Aspect1;
+import org.simpleframework.aop.annotation.Aspect2;
 import org.simpleframework.aop.annotation.Order;
 import org.simpleframework.aop.aspect.DefaultAspect;
-import org.simpleframework.core.annotation.Controller;
 import org.simpleframework.core.annotation.Service;
 
 import java.lang.reflect.Method;
@@ -16,7 +16,8 @@ import java.lang.reflect.Method;
  * @Date 2020/11/20 9:08
  **/
 
-@Aspect(Service.class)
+//@Aspect1(Service.class)
+@Aspect2(pointcut = "within(org.simpleframework.aop.annotation.Component)")
 @Slf4j
 @Order(1)
 public class ServiceInfoRecordAspect extends DefaultAspect {

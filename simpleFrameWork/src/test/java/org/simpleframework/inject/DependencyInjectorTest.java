@@ -1,6 +1,6 @@
 package org.simpleframework.inject;
 
-import com.mxk.controller.MainPageController;
+import com.mxk.controller.frontend.MainPageController;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,7 +1,8 @@
 package com.mxk.aspect;
 
 import lombok.extern.slf4j.Slf4j;
-import org.simpleframework.aop.annotation.Aspect;
+import org.simpleframework.aop.annotation.Aspect1;
+import org.simpleframework.aop.annotation.Aspect2;
 import org.simpleframework.aop.annotation.Order;
 import org.simpleframework.aop.aspect.DefaultAspect;
 import org.simpleframework.core.annotation.Controller;
@@ -15,7 +16,8 @@ import java.lang.reflect.Method;
  * @Date 2020/11/20 9:08
  **/
 
-@Aspect(Controller.class)
+//@Aspect1(Controller.class)
+@Aspect2(pointcut = "within(com.mxk.controller.superadmin.*)")
 @Slf4j
 @Order(10)
 public class ControllerInfoRecordAspect extends DefaultAspect {

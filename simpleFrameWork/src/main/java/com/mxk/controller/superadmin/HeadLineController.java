@@ -1,4 +1,4 @@
-package com.mxk.controller;
+package com.mxk.controller.superadmin;
 
 import com.mxk.entity.HeadLine;
 import com.mxk.entity.dto.Result;

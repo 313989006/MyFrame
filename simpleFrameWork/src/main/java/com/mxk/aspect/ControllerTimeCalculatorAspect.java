@@ -1,7 +1,8 @@
 package com.mxk.aspect;
 
 import lombok.extern.slf4j.Slf4j;
-import org.simpleframework.aop.annotation.Aspect;
+import org.simpleframework.aop.annotation.Aspect1;
+import org.simpleframework.aop.annotation.Aspect2;
 import org.simpleframework.aop.annotation.Order;
 import org.simpleframework.aop.aspect.DefaultAspect;
 import org.simpleframework.core.annotation.Controller;
@@ -15,7 +16,8 @@ import java.lang.reflect.Method;
  * @Date 2020/11/19 11:35
  **/
 // 标记Controller标签的方法上织入横切逻辑
-@Aspect(value = Controller.class)
+//@Aspect1(value = Controller.class)
+@Aspect2(pointcut = "execution(* com.mxk.controller.frontend..*.*(..))")
 @Slf4j
 @Order(0)
 public class ControllerTimeCalculatorAspect extends DefaultAspect {

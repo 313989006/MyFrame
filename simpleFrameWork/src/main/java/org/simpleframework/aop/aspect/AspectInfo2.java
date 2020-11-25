@@ -2,6 +2,7 @@ package org.simpleframework.aop.aspect;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.simpleframework.aop.PointCutLocator;
 
 /**
  * @ClassName AspectInfo
@@ -11,8 +12,9 @@ import lombok.Getter;
  **/
 @AllArgsConstructor
 @Getter
-public class AspectInfo {
+public class AspectInfo2 {
 
+    // AOP 1.0
     private int orderIndex;
 
     private DefaultAspect aspectObject;
@@ -22,4 +24,7 @@ public class AspectInfo {
 //        this.orderIndex = orderIndex;
 //        this.aspectObject = aspectObject;
 //    }
+
+    // AOP 2、0
+    private PointCutLocator pointCutLocator;
 }

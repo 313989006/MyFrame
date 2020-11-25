@@ -3,31 +3,34 @@ package org.simpleframework.aop;
 import lombok.Getter;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
-import org.simpleframework.aop.aspect.AspectInfo;
+import org.simpleframework.aop.aspect.AspectInfo1;
+import org.simpleframework.aop.aspect.AspectInfo2;
 import org.simpleframework.util.ValidationUtil;
 
 import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 /**
  * @ClassName AspectExcutor
  * @Description 创建 MethodInterceptor 的实现类：AspectExcutor
+ *
+ * 针对每个被代理的对象进行方法的拦截
+ *
  * 使用的是 cgLib 动态代理，所以需要实现 MethodInterceptor
- * @Author ma.kangkang
- * @Date 2020/11/17 14:24
  **/
-public class AspectExcutor implements MethodInterceptor {
+public class AspectExcutor2 implements MethodInterceptor {
 
     // 被代理的类
     private Class<?> targetClass;
 
     // 排好序的 Aspect 列表
     @Getter
-    private List<AspectInfo> sortedAspectInfoList;
+    private List<AspectInfo2> sortedAspectInfoList;
 
-    public AspectExcutor(Class<?> targetClass, List<AspectInfo> aspectInfoList) {
+    public AspectExcutor2(Class<?> targetClass, List<AspectInfo2> aspectInfoList) {
         this.targetClass = targetClass;
         // aspectInfoList 的排序
         this.sortedAspectInfoList = sortAspectInfoList(aspectInfoList);
@@ -39,7 +42,16 @@ public class AspectExcutor implements MethodInterceptor {
     @Override
     public Object intercept(Object proxy, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
         Object returnValue = null;
-        if (ValidationUtil.isEmpty(sortedAspectInfoList)){return returnValue;}
+
+        // AOP 2.0 传入 method，对 sortedAspectInfoList 进行精筛
+        // 剩下的 sortedAspectInfoList 跟之前的逻辑一样进行织入
+        collectAccurateMatchedAspectList(method);
+
+        if (ValidationUtil.isEmpty(sortedAspectInfoList)){
+            // AOP 2.0修改的地方，即便没有织入的逻辑，也要保证被代理方法的执行
+            returnValue = methodProxy.invokeSuper(proxy,args);
+            return returnValue;
+        }
         // 1、按照order 的顺序升序执行完所有Aspect 的 before 方法
         invokeBeforeAdvices(method,args);
         try {
@@ -59,10 +71,23 @@ public class AspectExcutor implements MethodInterceptor {
         return returnValue;
     }
 
+    private void collectAccurateMatchedAspectList(Method method) {
+        if (ValidationUtil.isEmpty(sortedAspectInfoList)){return;}
+        // 迭代器的方式去遍历
+        Iterator<AspectInfo2> iterator = sortedAspectInfoList.iterator();
+        while (iterator.hasNext()){
+            AspectInfo2 aspectInfo = iterator.next();
+            // 精准筛选
+            if (!aspectInfo.getPointCutLocator().accurateMatches(method)) {
+                iterator.remove();
+            }
+        }
+    }
+
 
     // 1、按照order 的顺序升序执行完所有 Aspect 的 before 方法
     private void invokeBeforeAdvices(Method method, Object[] args) throws Throwable {
-        for (AspectInfo aspectInfo : sortedAspectInfoList){
+        for (AspectInfo2 aspectInfo : sortedAspectInfoList){
             aspectInfo.getAspectObject().before(targetClass,method,args);
         }
     }
@@ -86,11 +111,11 @@ public class AspectExcutor implements MethodInterceptor {
     /**
     * 按照 order 的值进行升序排序，确保 order 值小的 aspect 先被织入
     */
-    private List<AspectInfo> sortAspectInfoList(List<AspectInfo> aspectInfoList) {
+    private List<AspectInfo2> sortAspectInfoList(List<AspectInfo2> aspectInfoList) {
         // 匿名的Comparator 实例
-        Collections.sort(aspectInfoList, new Comparator<AspectInfo>() {
+        Collections.sort(aspectInfoList, new Comparator<AspectInfo2>() {
             @Override
-            public int compare(AspectInfo o1, AspectInfo o2) {
+            public int compare(AspectInfo2 o1, AspectInfo2 o2) {
                 // 按照值的大小进行升序降序
                 // return 0 ：表示 o1 和 o2 是相等的
                 // return 大于0 ：表示 o1 大于 o2

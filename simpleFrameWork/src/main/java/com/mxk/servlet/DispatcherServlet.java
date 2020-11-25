@@ -1,8 +1,7 @@
 package com.mxk.servlet;
 
-import com.mxk.controller.HeadLineController;
-import com.mxk.controller.MainPageController;
-import com.mxk.entity.HeadLine;
+import com.mxk.controller.superadmin.HeadLineController;
+import com.mxk.controller.frontend.MainPageController;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

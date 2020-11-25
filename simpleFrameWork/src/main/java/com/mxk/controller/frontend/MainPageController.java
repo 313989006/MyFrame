@@ -1,4 +1,4 @@
-package com.mxk.controller;
+package com.mxk.controller.frontend;
 
 import com.mxk.entity.dto.MainPageInfoDto;
 import com.mxk.entity.dto.Result;
