@@ -59,13 +59,13 @@ public class RequestProcessorChain {
         try {
             while (requestProcessorIterator.hasNext()){
                 // 2、直到请求处理器执行后返回为 false 为止
-                if (requestProcessorIterator.next().process(this)) {
+                if (!requestProcessorIterator.next().process(this)) {
                     break;
                 }
             }
         } catch (Exception e) {
             // 3、期间如果出现异常，则交由内部异常渲染器处理
-            this.resultRender = new InternalErrorResultRender();
+            this.resultRender = new InternalErrorResultRender(e.getMessage());
             log.error("doRequestProcessorChain error : " ,e);
         }
     }

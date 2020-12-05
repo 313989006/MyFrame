@@ -1,7 +1,5 @@
 package org.simpleframework.util;
 
-import org.jcp.xml.dsig.internal.dom.DOMUtils;
-
 /**
  * @ClassName ConverterUtil
  * @Description TODO

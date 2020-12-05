@@ -1,6 +1,5 @@
 package org.simpleframework.mvc.processor.impl;
 
-import com.sun.corba.se.spi.ior.iiop.RequestPartitioningComponent;
 import lombok.extern.slf4j.Slf4j;
 import org.simpleframework.core.BeanContainer;
 import org.simpleframework.mvc.RequestProcessorChain;
@@ -36,13 +35,16 @@ public class ControllerRequestProcessor implements RequestProcessor {
     // 请求和 controller 方法的映射集合
     private Map<RequestPathInfo,ControllerMethod> pathControllerMethodMap = new ConcurrentHashMap<>();
 
+    /**
+    * 依靠容器的能力，建立起请求路径、请求方法与 Controller 方法实例的映射
+    */
     public ControllerRequestProcessor(){
         this.beanContainer = BeanContainer.instance();
         Set<Class<?>> requestMappingSet = beanContainer.getClassesByAnnotation(RequestMapping.class);
-        initPathControllerMehthodMap(requestMappingSet);
+        initPathControllerMethodMap(requestMappingSet);
     }
 
-    private void initPathControllerMehthodMap(Set<Class<?>> requestMappingSet) {
+    private void initPathControllerMethodMap(Set<Class<?>> requestMappingSet) {
         if (ValidationUtil.isEmpty(requestMappingSet)){
             return;
         }
@@ -73,31 +75,29 @@ public class ControllerRequestProcessor implements RequestProcessor {
                     // 获取被标记的参数的数据类型，建立参数名和参数类型的映射
                     Map<String ,Class<?>> methodParams = new HashMap<>();
                     Parameter[] parameters = method.getParameters();
-                    if (ValidationUtil.isEmpty(parameters)){
-                        continue;
+                    if (!ValidationUtil.isEmpty(parameters)){
+                        for (Parameter parameter : parameters) {
+                            RequestParam param = parameter.getAnnotation(RequestParam.class);
+                            // 目前暂定为 Controller 方法粒粒面所有的参数都需要 @RequestParam 注解
+                            if (param == null) {
+                                throw new RuntimeException("The parameter must have @RequestParam");
+                            }
+                            methodParams.put(param.value(), parameter.getType());
+                        }
                     }
-                    for (Parameter parameter : parameters){
-                        RequestParam param = parameter.getAnnotation(RequestParam.class);
-                        // 目前暂定为 Controller 方法粒粒面所有的参数都需要 @RequestParam 注解
-                        if (param == null){
-                            throw new RuntimeException("The parameter must have @RequestParam");
-                        }
-                        methodParams.put(param.value(),parameter.getType());
+                    // 4、将获取到的信息封装成 RequestPathInfo 实例 和 ControllerMethod 实例，放置到映射表 pathControllerMethodMap 里
+                    String httpMethod = String.valueOf(methodRequestMapping.method());
+                    RequestPathInfo requestPathInfo = new RequestPathInfo(httpMethod, url);
 
-                        // 4、将获取到的信息封装成 RequestPathInfo 实例 和 ControllerMethod 实例，放置到映射表 pathControllerMethodMap 里
-                        String httpMethod = String.valueOf(methodRequestMapping.method());
-                        RequestPathInfo requestPathInfo = new RequestPathInfo(httpMethod, url);
-
-                        if (this.pathControllerMethodMap.containsKey(requestPathInfo)) {
-                            log.warn("duplicate url :{} registration ,current class {} method {} will override the former one ",
-                                    requestPathInfo.getHttpPath(),requestMappingClass.getName(),method.getName());
-                        }
-                        ControllerMethod controllerMethod = new ControllerMethod(requestMappingClass, method, methodParams);
-                        this.pathControllerMethodMap.put(requestPathInfo,controllerMethod);
+                    if (this.pathControllerMethodMap.containsKey(requestPathInfo)) {
+                        log.warn("duplicate url :{} registration ,current class {} method {} will override the former one ",
+                                requestPathInfo.getHttpPath(),requestMappingClass.getName(),method.getName());
+                    }
+                    ControllerMethod controllerMethod = new ControllerMethod(requestMappingClass, method, methodParams);
+                    this.pathControllerMethodMap.put(requestPathInfo,controllerMethod);
                     }
                 }
             }
-        }
     }
 
     @Override
@@ -117,7 +117,7 @@ public class ControllerRequestProcessor implements RequestProcessor {
         Object result = invokeControllerMethod(controllerMethod,requestProcessorChain.getRequest());
         // 3、根据解析的结果，选择对应的 render 进行渲染
         setResultRender(result,controllerMethod,requestProcessorChain);
-        return false;
+        return true;
     }
 
     private Object invokeControllerMethod(ControllerMethod controllerMethod, HttpServletRequest request) {
@@ -184,8 +184,6 @@ public class ControllerRequestProcessor implements RequestProcessor {
             resultRender = new ViewResultRender(result);
         }
         requestProcessorChain.setResultRender(resultRender);
-
-
 
     }
 }

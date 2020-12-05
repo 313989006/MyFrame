@@ -6,6 +6,8 @@ import com.mxk.service.HeadLineService;
 import lombok.Getter;
 import org.simpleframework.core.annotation.Controller;
 import org.simpleframework.inject.annotation.Autowired;
+import org.simpleframework.mvc.annotation.RequestMapping;
+import org.simpleframework.mvc.type.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +20,8 @@ import java.util.List;
  * @Date 2020/11/1 12:22
  **/
 @Controller
-@Getter
+//@Getter
+@RequestMapping(value = "/headline")
 public class HeadLineController {
 
     @Autowired(value = "HeadLineServiceImpl")
@@ -37,6 +40,11 @@ public class HeadLineController {
     public Result<Boolean> delete(HttpServletRequest req, HttpServletResponse resp){
         // TODO :参数校验以及请求参数转化
         return headLineService.delete(1);
+    }
+
+    @RequestMapping(value = "/remove",method = RequestMethod.GET)
+    public void remove(){
+        System.out.println("删除完成");
     }
 
     public Result<HeadLine> queryById(HttpServletRequest req, HttpServletResponse resp){
